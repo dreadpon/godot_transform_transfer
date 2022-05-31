@@ -10,7 +10,7 @@ If you ever need to snap one spatial scene to another, that's how you do it with
 
 This plugin is installed the same as other Godot plugins.
 
-Copy the folder `assets/dreadpon.transform_transfer/` to `res://addons/` in your Godot project and enable it from `Project -> Project Settings -> Plugins`.
+Copy the folder `addons/dreadpon.transform_transfer/` to `res://addons/` in your Godot project and enable it from `Project -> Project Settings -> Plugins`.
 
 ## Support
 

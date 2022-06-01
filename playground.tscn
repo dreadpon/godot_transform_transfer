@@ -1,0 +1,133 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://addons/dreadpon.transform_transfer/assets/icon.png" type="Texture" id=1]
+[ext_resource path="res://addons/dreadpon.transform_transfer/assets/transform_transfer_2d_icon.svg" type="Texture" id=2]
+[ext_resource path="res://addons/dreadpon.transform_transfer/assets/transform_transfer_ui_icon.svg" type="Texture" id=3]
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 0.5, 0.5, 0.5 )
+uv1_offset = Vector3( 0.5, 0.5, 0.5 )
+uv1_triplanar = true
+
+[sub_resource type="CubeMesh" id=1]
+
+[node name="PlaygroundForTesting" type="Node"]
+
+[node name="Spatial" type="Spatial" parent="."]
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial"]
+transform = Transform( -0.112364, 0.246832, -0.962522, 0.0563521, -0.965514, -0.254178, -0.992068, -0.0828006, 0.0945794, 1.2348, -6.15751, -3.9816 )
+material_override = SubResource( 2 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="MeshInstance4" type="MeshInstance" parent="Spatial/MeshInstance"]
+transform = Transform( 1.03633, -0.283235, -2.25714, 2.1284, 0.996269, 0.852203, 0.803009, -2.2751, 0.654175, 8.77161, -5.40568, -4.85297 )
+material_override = SubResource( 2 )
+mesh = SubResource( 1 )
+skeleton = NodePath("../..")
+material/0 = null
+
+[node name="MeshInstance2" type="MeshInstance" parent="Spatial"]
+transform = Transform( -0.34455, 1.58829, -0.347977, -1.50314, -0.446765, -0.550858, -0.619942, 0.200509, 1.52903, -1.01873, 3.98489, 0.341736 )
+material_override = SubResource( 2 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="MeshInstance5" type="MeshInstance" parent="Spatial/MeshInstance2"]
+transform = Transform( 1.63027, -0.62192, -0.702985, 0.166817, 1.57848, -1.00961, 0.923659, 0.812621, 1.42312, -0.463537, 6.94754, 3.4194 )
+material_override = SubResource( 2 )
+mesh = SubResource( 1 )
+skeleton = NodePath("../..")
+material/0 = null
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="Node2D"]
+position = Vector2( 215, 98 )
+rotation = -0.918483
+scale = Vector2( 9.34481, 9.34481 )
+texture = ExtResource( 2 )
+
+[node name="Sprite3" type="Sprite" parent="Node2D/Sprite"]
+position = Vector2( -15.8613, 33.7083 )
+rotation = 1.89641
+scale = Vector2( 1.18914, 1.18914 )
+texture = ExtResource( 2 )
+
+[node name="Sprite2" type="Sprite" parent="Node2D"]
+position = Vector2( 648, 140 )
+rotation = 2.70532
+scale = Vector2( 8.34349, 8.34349 )
+texture = ExtResource( 2 )
+
+[node name="Sprite3" type="Sprite" parent="Node2D/Sprite2"]
+position = Vector2( -3.50272, -35.8834 )
+rotation = 1.02548
+scale = Vector2( 1.94145, 1.94145 )
+texture = ExtResource( 2 )
+
+[node name="Control" type="Control" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Control"]
+anchor_left = 0.5
+anchor_top = 0.1
+anchor_right = 0.5
+anchor_bottom = 0.1
+margin_left = 294.0
+margin_top = 109.0
+margin_right = 358.0
+margin_bottom = 173.0
+rect_rotation = 47.4316
+rect_scale = Vector2( 1.97256, 1.97256 )
+texture = ExtResource( 3 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="Control/TextureRect"]
+margin_left = 80.9148
+margin_top = -130.808
+margin_right = 144.915
+margin_bottom = -66.8082
+rect_rotation = -84.4138
+rect_scale = Vector2( 0.51765, 0.51765 )
+texture = ExtResource( 3 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect3" type="TextureRect" parent="Control"]
+margin_left = 522.0
+margin_top = 330.0
+margin_right = 586.0
+margin_bottom = 394.0
+rect_rotation = -44.9947
+rect_scale = Vector2( 2.66623, 2.66623 )
+texture = ExtResource( 3 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect3" type="TextureRect" parent="Control/TextureRect3"]
+margin_left = -105.022
+margin_top = 10.0876
+margin_right = -41.0214
+margin_bottom = 74.0876
+rect_rotation = -17.7482
+rect_scale = Vector2( 1.03129, 1.03129 )
+texture = ExtResource( 3 )
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}

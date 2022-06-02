@@ -3,10 +3,12 @@ extends Reference
 
 
 enum TransferNodeType {NODE_3D, NODE_2D, NODE_CONTROL, OTHER}
-enum TransferScaleHandling {USE_AVERAGE, USE_MIN, USE_MAX}
+enum TransferScaleHandling {USE_AVERAGE, USE_MIN, USE_MAX, KEEP_ORIGINAL}
 # This one uses bitflags since it can have these states at once
 enum TransferFlags {TRANSLATION = int(pow(2,0)), ROTATION = int(pow(2,1)), SCALE = int(pow(2,2)), 
 	ANCHOR = int(pow(2,3)), MARGIN = int(pow(2,4)), SIZE = int(pow(2,5)), MIN_SIZE = int(pow(2,6)), PIVOT_OFFSET = int(pow(2,7))}
+
+const PRESET_2D_3D_ALL_TRANSFORMS = TransferFlags.TRANSLATION + TransferFlags.ROTATION + TransferFlags.SCALE
 
 const transform_transfer_3d_icon = preload("assets/transform_transfer_3d_icon.svg")
 const transform_transfer_2d_icon = preload("assets/transform_transfer_2d_icon.svg")
@@ -99,7 +101,7 @@ func add_gui():
 	button_ui_popup.add_radio_check_item("Use Min Axis")
 	button_ui_popup.add_radio_check_item("Use Max Axis")
 	bind_popup_menu(button_ui_popup, 
-		[-1,0,-1,0,0,0,0,0,0,0,-1,1,1,1], [0,1,-1,0,0,1,1,1,1,1,0,1,0,0],
+		[-1,0,-1,0,0,0,0,0,0,0,-1,1,1,1], [0,1,-1,0,0,0,0,0,0,0,0,1,0,0],
 		[0, TransferFlags.TRANSLATION, 0, TransferFlags.ANCHOR, TransferFlags.MARGIN, TransferFlags.SIZE, TransferFlags.MIN_SIZE, TransferFlags.PIVOT_OFFSET, TransferFlags.ROTATION, TransferFlags.SCALE, 
 			0, TransferScaleHandling.USE_AVERAGE, TransferScaleHandling.USE_MIN, TransferScaleHandling.USE_MAX])
 	
@@ -242,6 +244,7 @@ func update_selection_queue(selected_nodes:Array):
 func proceed_transform_transfer(node_type:int, flags:int, scale_handling:int):
 	var selection = selection_queue.duplicate()
 	var source = selection.pop_front()
+	reorder_children_parents(selection, source)
 	
 	var transfer_node_type_key =  TransferNodeType.keys()[TransferNodeType.values().find(node_type)]
 	undo_redo.create_action("Transfer transform %s" % [transfer_node_type_key])
@@ -252,19 +255,45 @@ func proceed_transform_transfer(node_type:int, flags:int, scale_handling:int):
 			for target in selection:
 				undo_redo.add_do_method(self, "set_3d_transform_to_flags", target, source.global_transform, flags, scale_handling)
 				undo_redo.add_undo_method(self, "reset_3d_transform", target, target.global_transform)
+			undo_redo.add_do_method(self, "set_3d_transform_to_flags", source, source.global_transform, PRESET_2D_3D_ALL_TRANSFORMS, TransferScaleHandling.KEEP_ORIGINAL)
+			undo_redo.add_undo_method(self, "reset_3d_transform", source, source.global_transform)
 		
 		TransferNodeType.NODE_2D:
 			for target in selection:
 				undo_redo.add_do_method(self, "set_2d_transform_to_flags", target, source.global_transform, flags, scale_handling)
 				undo_redo.add_undo_method(self, "reset_2d_transform", target, target.global_transform)
+			undo_redo.add_do_method(self, "reset_2d_transform", source, source.global_transform)
+			undo_redo.add_undo_method(self, "reset_2d_transform", source, source.global_transform)
 		
 		TransferNodeType.NODE_CONTROL:
 			for target in selection:
 				undo_redo.add_do_method(self, "set_ui_transform_to_flags", target, TransformUI.new(source), flags, scale_handling)
 				undo_redo.add_undo_method(self, "reset_ui_transform", target, TransformUI.new(target))
+			undo_redo.add_do_method(self, "reset_ui_transform", source, TransformUI.new(source))
+			undo_redo.add_undo_method(self, "reset_ui_transform", source, TransformUI.new(source))
 	
 	undo_redo.commit_action()
 	print("Transform Transfer: successfully transfered transform from '%s' to '%s'" % [source, str(selection)])
+
+
+# Transfering parent transforms will also transform any children
+# If we transfer children first and then the parent, children will become offset (since their parent updates their transforms)
+# So we explicitly reorder our selection to transfer parents *first* and children *second*
+func reorder_children_parents(selection:Array, source:Node):
+	var root_node = null
+	if Engine.editor_hint:
+		root_node = source.get_tree().edited_scene_root
+	else:
+		root_node = source.get_tree().current_scene
+	reorder_iterate_child(selection, selection.duplicate(), root_node)
+
+
+func reorder_iterate_child(new_selection:Array, selection:Array, node:Node):
+	for child in node.get_children():
+		if selection.has(child):
+			new_selection.append(child)
+		reorder_iterate_child(new_selection, selection, child)
+
 
 
 
@@ -295,6 +324,8 @@ func reset_3d_transform(target_node:Spatial, source_transform:Transform):
 # We normalize the scale, making it uniform
 # We also have a few different options for how we choose that uniform value
 func normalize_3d_scale(scale:Vector3, scale_handling:int):
+	if scale_handling == TransferScaleHandling.KEEP_ORIGINAL: return scale
+	
 	var scale_axis_val = 0.0
 	match scale_handling:
 		TransferScaleHandling.USE_AVERAGE:
@@ -408,7 +439,7 @@ func reset_ui_transform(target_node:Control, source_transform:TransformUI):
 	target_node.margin_right = source_transform.margin_right
 	target_node.margin_bottom = source_transform.margin_bottom
 	
-	target_node.rect_position = source_transform.rect_position
+	target_node.rect_global_position = source_transform.rect_global_position#source_transform.rect_position
 	target_node.rect_size = source_transform.rect_size
 	target_node.rect_min_size = source_transform.rect_min_size
 	target_node.rect_rotation = source_transform.rect_rotation

@@ -1,14 +1,12 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://addons/dreadpon.transform_transfer/assets/icon.png" type="Texture" id=1]
 [ext_resource path="res://addons/dreadpon.transform_transfer/assets/transform_transfer_2d_icon.svg" type="Texture" id=2]
 [ext_resource path="res://addons/dreadpon.transform_transfer/assets/transform_transfer_ui_icon.svg" type="Texture" id=3]
 
 [sub_resource type="SpatialMaterial" id=2]
-albedo_texture = ExtResource( 1 )
+albedo_color = Color( 1, 0.517647, 0.517647, 1 )
 uv1_scale = Vector3( 0.5, 0.5, 0.5 )
 uv1_offset = Vector3( 0.5, 0.5, 0.5 )
-uv1_triplanar = true
 
 [sub_resource type="CubeMesh" id=1]
 
@@ -17,26 +15,39 @@ uv1_triplanar = true
 [node name="Spatial" type="Spatial" parent="."]
 
 [node name="MeshInstance" type="MeshInstance" parent="Spatial"]
-transform = Transform( -0.112364, 0.246832, -0.962522, 0.0563521, -0.965514, -0.254178, -0.992068, -0.0828006, 0.0945794, 1.2348, -6.15751, -3.9816 )
+transform = Transform( 2.08196, -0.955757, 0.474261, 0.653595, 1.96438, 1.0895, -0.843332, -0.83709, 2.0152, -14.3908, -3.77612, -25.3624 )
 material_override = SubResource( 2 )
 mesh = SubResource( 1 )
 material/0 = null
 
-[node name="MeshInstance4" type="MeshInstance" parent="Spatial/MeshInstance"]
-transform = Transform( 1.03633, -0.283235, -2.25714, 2.1284, 0.996269, 0.852203, 0.803009, -2.2751, 0.654175, 8.77161, -5.40568, -4.85297 )
+[node name="MeshInstance2" type="MeshInstance" parent="Spatial/MeshInstance"]
+transform = Transform( 0.12984, 0.357762, -0.924742, -0.976789, 0.206407, -0.0572932, 0.170375, 0.910716, 0.376257, 10.548, -2.70263, 4.16309 )
 material_override = SubResource( 2 )
 mesh = SubResource( 1 )
 skeleton = NodePath("../..")
 material/0 = null
 
-[node name="MeshInstance2" type="MeshInstance" parent="Spatial"]
-transform = Transform( -0.34455, 1.58829, -0.347977, -1.50314, -0.446765, -0.550858, -0.619942, 0.200509, 1.52903, -1.01873, 3.98489, 0.341736 )
+[node name="MeshInstance3" type="MeshInstance" parent="Spatial"]
+transform = Transform( 1.67854, 4.89088, -1.36045, 1.59196, 3.64482, 1.77404, 6.35194, -2.20593, -0.0851121, -13.9518, -3.95176, 0 )
 material_override = SubResource( 2 )
 mesh = SubResource( 1 )
 material/0 = null
 
-[node name="MeshInstance5" type="MeshInstance" parent="Spatial/MeshInstance2"]
-transform = Transform( 1.63027, -0.62192, -0.702985, 0.166817, 1.57848, -1.00961, 0.923659, 0.812621, 1.42312, -0.463537, 6.94754, 3.4194 )
+[node name="MeshInstance4" type="MeshInstance" parent="Spatial/MeshInstance3"]
+transform = Transform( -0.492374, 0.327932, -0.0120793, -0.303556, -0.4447, 0.300667, 0.456786, 0.743327, 1.56059, 1.15296, 3.44568, -2.5884 )
+material_override = SubResource( 2 )
+mesh = SubResource( 1 )
+skeleton = NodePath("../..")
+material/0 = null
+
+[node name="MeshInstance5" type="MeshInstance" parent="Spatial"]
+transform = Transform( -0.208216, -5.95089, 1.26664, 0.016629, 5.81003, 1.72231, -0.35663, 3.74531, -0.659215, -13.7761, 0.74189, 26.2405 )
+material_override = SubResource( 2 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="MeshInstance6" type="MeshInstance" parent="Spatial/MeshInstance5"]
+transform = Transform( -1.17013, -2.11744, -0.0391501, -0.0947233, 0.0520033, 0.0185157, -0.062631, 0.0427555, -0.440497, -34.107, -1.7578, 7.76396 )
 material_override = SubResource( 2 )
 mesh = SubResource( 1 )
 skeleton = NodePath("../..")
@@ -45,27 +56,39 @@ material/0 = null
 [node name="Node2D" type="Node2D" parent="."]
 
 [node name="Sprite" type="Sprite" parent="Node2D"]
-position = Vector2( 215, 98 )
-rotation = -0.918483
-scale = Vector2( 9.34481, 9.34481 )
-texture = ExtResource( 2 )
-
-[node name="Sprite3" type="Sprite" parent="Node2D/Sprite"]
-position = Vector2( -15.8613, 33.7083 )
-rotation = 1.89641
-scale = Vector2( 1.18914, 1.18914 )
+position = Vector2( 200, 400 )
+rotation = 0.80119
+scale = Vector2( 4.39022, -13.0467 )
 texture = ExtResource( 2 )
 
 [node name="Sprite2" type="Sprite" parent="Node2D"]
-position = Vector2( 648, 140 )
-rotation = 2.70532
-scale = Vector2( 8.34349, 8.34349 )
+position = Vector2( 187.872, 65.5588 )
+rotation = -0.786587
+scale = Vector2( 8.32739, 8.32739 )
 texture = ExtResource( 2 )
 
-[node name="Sprite3" type="Sprite" parent="Node2D/Sprite2"]
-position = Vector2( -3.50272, -35.8834 )
-rotation = 1.02548
-scale = Vector2( 1.94145, 1.94145 )
+[node name="Sprite3" type="Sprite" parent="Node2D"]
+position = Vector2( 511, 430 )
+rotation = 3.13777
+scale = Vector2( 4.53728, 8.4035 )
+texture = ExtResource( 2 )
+
+[node name="Sprite4" type="Sprite" parent="Node2D"]
+position = Vector2( 507.003, 102 )
+rotation = 0.463738
+scale = Vector2( 16.9024, 16.9024 )
+texture = ExtResource( 2 )
+
+[node name="Sprite5" type="Sprite" parent="Node2D"]
+position = Vector2( 860, 433 )
+rotation = -1.37998
+scale = Vector2( 7.15603, 7.15603 )
+texture = ExtResource( 2 )
+
+[node name="Sprite6" type="Sprite" parent="Node2D"]
+position = Vector2( 870.002, 108 )
+rotation = -2.36527
+scale = Vector2( 4.54327, 4.54327 )
 texture = ExtResource( 2 )
 
 [node name="Control" type="Control" parent="."]
@@ -81,10 +104,10 @@ anchor_left = 0.5
 anchor_top = 0.1
 anchor_right = 0.5
 anchor_bottom = 0.1
-margin_left = 294.0
-margin_top = 109.0
-margin_right = 358.0
-margin_bottom = 173.0
+margin_left = 208.0
+margin_top = 358.0
+margin_right = 272.0
+margin_bottom = 422.0
 rect_rotation = 47.4316
 rect_scale = Vector2( 1.97256, 1.97256 )
 texture = ExtResource( 3 )
@@ -94,12 +117,12 @@ __meta__ = {
 }
 
 [node name="TextureRect2" type="TextureRect" parent="Control/TextureRect"]
-margin_left = 80.9148
-margin_top = -130.808
-margin_right = 144.915
-margin_bottom = -66.8082
+margin_left = -116.38
+margin_top = -28.4258
+margin_right = -52.38
+margin_bottom = 35.574
 rect_rotation = -84.4138
-rect_scale = Vector2( 0.51765, 0.51765 )
+rect_scale = Vector2( 0.926975, 0.926975 )
 texture = ExtResource( 3 )
 stretch_mode = 1
 __meta__ = {
@@ -107,10 +130,10 @@ __meta__ = {
 }
 
 [node name="TextureRect3" type="TextureRect" parent="Control"]
-margin_left = 522.0
-margin_top = 330.0
-margin_right = 586.0
-margin_bottom = 394.0
+margin_left = 688.0
+margin_top = 425.0
+margin_right = 752.0
+margin_bottom = 489.0
 rect_rotation = -44.9947
 rect_scale = Vector2( 2.66623, 2.66623 )
 texture = ExtResource( 3 )
@@ -119,11 +142,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect3" type="TextureRect" parent="Control/TextureRect3"]
-margin_left = -105.022
-margin_top = 10.0876
-margin_right = -41.0214
-margin_bottom = 74.0876
+[node name="TextureRect4" type="TextureRect" parent="Control/TextureRect3"]
+margin_left = 59.9305
+margin_top = -71.0814
+margin_right = 123.931
+margin_bottom = -7.08144
 rect_rotation = -17.7482
 rect_scale = Vector2( 1.03129, 1.03129 )
 texture = ExtResource( 3 )

@@ -43,6 +43,12 @@ This plugin was developed and tested using Godot v3.4.2, but should work fine on
     - `Average`      - calculates the average of all scale axes       (e.g. `(1.5, 2.1, 0.6)` becomes `(1.4, 1.4, 1.4)`)
     - `Use Min Axis` - uses the smallest value to set the whole scale (e.g. `(1.5, 2.1, 0.6)` becomes `(0.6, 0.6, 0.6)`)
     - `Use Max Axis` - uses the largest value to set the whole scale  (e.g. `(1.5, 2.1, 0.6)` becomes `(2.1, 2.1, 2.1)`)
+* `Node2D` nodes seem to have skewed transforms after saving non-uniform scaled parents and children. It seems to be how Godot handles things and is not related to the plugin.
 * `Control` nodes don't behave in the same way as `Spatial` or `Node2D`. They obey their anchors, margins and containers, so aligning two Controls in global space makes little sense.
     - For completeness sake, you can transfer most transformation-related attributes between `Control` nodes, but they are merely copied and pasted. The layout will decide how these nodes are actually placed.
     - The only attribute that actually *can* have global transformations is `Position`. Transfering this attribute **will** align nodes, unless other `Controls` force a different layout.
+* While tranfering transforms should work across most possible parenting setups, it's recommended to transfer only between nodes that have the same immediate parent. 
+    - Recommended setup:
+    - ![Simple Parent Setup](media/simple_parent_setup.png)
+    - Setups like this can cause problems and hard-to-define behavior:
+    - ![Complex Parent Setup](media/complex_parent_setup.png)
